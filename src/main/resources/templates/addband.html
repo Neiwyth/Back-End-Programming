@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Bandlist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <div>
+        <h1>Create new band entry</h1>
+        <form th:object="${band}" th:action="@{/saveband}" method="post">
+            <div>
+                <label>*Name:</label>
+                <input type="text" id="bandName" th:field="*{bandName}" required />
+            </div>
+            <div>
+                <label>*Formed:</label>
+                <input type="text" id="yearFormed" th:field="*{yearFormed}" required />
+            </div>
+            <div>
+                <label>*Country:</label>
+                <input type="text" id="countryOfOrigin" th:field="*{countryOfOrigin}" required />
+            </div>
+            <div>
+                <label>*Genre:</label>
+                <input type="text" id="genre" th:field="*{genre}" required />
+            </div>
+            <input type="submit" value="Add" />
+            <input type="reset" value="Clear" />
+            <input type="button" value="Back" onclick="location.href='/bandlist'" />
+        </form>
+    </div>
+</body>
+
+</html>

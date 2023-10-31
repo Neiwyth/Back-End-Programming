@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <button onclick="location.href='/bandlist'">Back</button>
+    <h1 th:text="${band.bandName}"></h1>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Year formed</td>
+                <td>Country</td>
+                <td>Genre</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td th:text="${band.yearFormed}"></td>
+                <td th:text="${band.countryOfOrigin}"></td>
+                <td th:text="${band.genre}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h2>Songlist</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Song name</td>
+                <td>Year</td>
+                <td>Album</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each=" song : ${songs}">
+                <td th:text="${song.songName}"></td>
+                <td th:text="${song.publicationYear}"></td>
+                <td th:text="${song.album}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
