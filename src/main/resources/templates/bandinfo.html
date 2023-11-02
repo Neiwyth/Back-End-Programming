@@ -8,7 +8,9 @@
 
 <body>
     <button onclick="location.href='/bandlist'">Back</button>
+
     <h1 th:text="${band.bandName}"></h1>
+    <a th:href="@{/addsong/{id}(id=${band.bandId})}">New Song</a>
 
     <table>
         <thead>
@@ -43,6 +45,10 @@
                 <td th:text="${song.songName}"></td>
                 <td th:text="${song.publicationYear}"></td>
                 <td th:text="${song.album}"></td>
+                <td><a th:href="@{/editsong/{id}(id=${song.songId})}">Edit</a></td>
+                <td>
+                    <a th:href="@{/deletesong/{id}(id=${song.songId})}">Delete</a>
+                </td>
             </tr>
         </tbody>
     </table>

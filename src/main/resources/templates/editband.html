@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Bandlist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <form th:object="${band}" th:action="@{/saveband}" method="post">
+        <caption>
+            <h1 th:text="${band.bandName}"></h1>
+        </caption>
+        <div>
+            <input type="hidden" th:field="*{bandId}" />
+        </div>
+        <div>
+            <label>*Name:</label>
+            <input type="text" id="bandName" th:field="*{bandName}" required />
+        </div>
+        <div>
+            <label>*Formed:</label>
+            <input type="text" id="yearFormed" th:field="*{yearFormed}" required />
+        </div>
+        <div>
+            <label>*Country:</label>
+            <input type="text" id="countryOfOrigin" th:field="*{countryOfOrigin}" required />
+        </div>
+        <div>
+            <label>*Genre:</label>
+            <input type="text" id="genre" th:field="*{genre}" required />
+        </div>
+        <input type="submit" value="Save" />
+        <a th:href="@{/bandinfo/{id}(id=${band.bandId})}">Back</a>
+    </form>
+
+</body>
+
+</html>

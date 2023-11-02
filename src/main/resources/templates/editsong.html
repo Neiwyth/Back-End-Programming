@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Bandlist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <form th:object="${song}" th:action="@{/savesong}" method="post">
+        <caption>
+            <h1 th:text="${song.songName}"></h1>
+        </caption>
+        <div>
+            <input type="hidden" th:field="${song.band.bandId}" />
+            <input type="hidden" th:field="${song.band.countryOfOrigin}" />
+            <input type="hidden" th:field="${song.band.genre}" />
+            <input type="hidden" th:field="${song.band.yearFormed}" />
+        </div>
+        <div>
+            <input type="hidden" th:field="*{songId}" />
+        </div>
+        <div>
+            <label>*Name:</label>
+            <input type="text" id="songName" th:field="*{songName}" required />
+        </div>
+        <div>
+            <label>*Published:</label>
+            <input type="text" id="publicationYear" th:field="*{publicationYear}" required />
+        </div>
+        <div>
+            <label>*Album:</label>
+            <input type="text" id="album" th:field="*{album}" required />
+        </div>
+        <div>
+            <label>Band:</label>
+            <input type="text" id="bandName" th:field="${song.band.bandName}" readonly />
+        </div>
+        <input type="submit" value="Save" />
+        <a th:href="@{/bandinfo/{id}(id=${song.band.bandId})}">Back</a>
+    </form>
+
+</body>
+
+</html>

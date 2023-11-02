@@ -18,6 +18,10 @@
                     <td>
                         <a th:href="@{/bandinfo/{id}(id=${band.bandId})}" th:text="${band.bandName}"></a>
                     </td>
+                    <td><a th:href="@{/editband/{id}(id=${band.bandId})}">Edit</a></td>
+                    <td>
+                        <a th:href="@{/deleteband/{id}(id=${band.bandId})}">Delete</a>
+                    </td>
                 </tr>
             </tbody>
         </table>

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <div>
+        <!-- <h1 th:text="'New song for ' + ${newSong.band.bandName}"></h1> -->
+        <h1>Create new song entry</h1>
+        <form th:object="${newSong}" th:action="@{/savesong}" method="post">
+            <div>
+                <input type="hidden" th:field="${newSong.band.bandId}" />
+                <input type="hidden" th:field="${newSong.band.countryOfOrigin}" />
+                <input type="hidden" th:field="${newSong.band.genre}" />
+                <input type="hidden" th:field="${newSong.band.yearFormed}" />
+            </div>
+            <div>
+                <label>Band:</label>
+                <input type="text" th:field="${newSong.band.bandName}" readonly />
+            </div>
+            <div>
+                <label>*Song name:</label>
+                <input type="text" id="songName" th:field="*{songName}" required />
+            </div>
+            <div>
+                <label>*Published:</label>
+                <input type="text" id="publicationYear" th:field="*{publicationYear}" required />
+            </div>
+            <div>
+                <label>*Album:</label>
+                <input type="text" id="album" th:field="*{album}" required />
+            </div>
+            <input type="submit" value="Add" />
+            <input type="reset" value="Clear" />
+            <input type="button" value="Back" onclick="location.href='/bandlist'" />
+            <!-- <a th:href="@{/bandinfo/{id}(id=${newSong.band.bandId})}">Back</a> -->
+        </form>
+    </div>
+</body>
+
+</html>

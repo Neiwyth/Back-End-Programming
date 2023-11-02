@@ -43,7 +43,7 @@ public class BandController {
         return "bandinfo";
     }
 
-    // add new band entry
+    // add new band
     @GetMapping("/addband")
     public String addNewBand(Model model) {
 
@@ -51,9 +51,9 @@ public class BandController {
         return "addband";
     }
 
-    // save new band
+    // save new band or save edits for existing band
     @PostMapping("/saveband")
-    public String saveNewBand(Band band) {
+    public String saveBand(Band band) {
 
         bandRepository.save(band);
         Long bandId = band.getBandId();
@@ -62,8 +62,16 @@ public class BandController {
 
     // edit band information
     @GetMapping("/editband/{id}")
-    public String saveBand(@PathVariable("id") Long bandId, Model model) {
-        model.addAttribute("band", bandRepository.findById(bandId));
+    public String editBand(@PathVariable("id") Long bandId, Model model) {
+        model.addAttribute("band", bandRepository.findById(bandId).orElse(null));
         return "editband";
     }
+
+    // delete band and all songs associated with the band
+    @GetMapping("deleteband/{id}")
+    public String deleteBand(@PathVariable("id") Long bandId) {
+        bandRepository.deleteById(bandId);
+        return "redirect:/bandlist";
+    }
+
 }

@@ -32,6 +32,7 @@ public class Band {
     @JsonIgnoreProperties("band")
     private List<BandComment> bandComments;
 
+    // orphanRemoval = true,
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "band")
     @JsonIgnoreProperties("band")
     private List<Song> songs;
@@ -46,6 +47,15 @@ public class Band {
         this.yearFormed = yearFormed;
         this.countryOfOrigin = countryOfOrigin;
         this.genre = genre;
+    }
+
+    public Band(String bandName, int yearFormed, String countryOfOrigin, String genre, List<Song> songs) {
+        super();
+        this.bandName = bandName;
+        this.yearFormed = yearFormed;
+        this.countryOfOrigin = countryOfOrigin;
+        this.genre = genre;
+        this.songs = songs;
     }
 
     public long getBandId() {
