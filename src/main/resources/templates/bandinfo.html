@@ -38,6 +38,7 @@
                 <td>Song name</td>
                 <td>Year</td>
                 <td>Album</td>
+                <td>Listen</td>
             </tr>
         </thead>
         <tbody>
@@ -45,6 +46,12 @@
                 <td th:text="${song.songName}"></td>
                 <td th:text="${song.publicationYear}"></td>
                 <td th:text="${song.album}"></td>
+                <td>
+                    <!-- <a th:href="@{song.spotifyLink}" target="_blank"><img
+                            src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" /></a> -->
+                    <!-- <a th:href="${song.spotifyLink}" th:text="${song.spotifyLink}"></a>
+                    <a th:href="@{song.youtubeLink}" th:utext="${song.youtubeLink}"></a> -->
+                </td>
                 <td><a th:href="@{/editsong/{id}(id=${song.songId})}">Edit</a></td>
                 <td>
                     <a th:href="@{/deletesong/{id}(id=${song.songId})}">Delete</a>
@@ -52,6 +59,27 @@
             </tr>
         </tbody>
     </table>
+
+    <div>
+        <h2>Leave a comment</h2>
+        <form th:object="${newComment}" th:action="@{/savecomment}" method="post">
+            <input type="hidden" th:field="${newComment.band}" th:value="${newComment.band}" />
+            <textarea style="resize: none; " cols="60" rows="7" th:field="*{content}" required></textarea><br />
+            <input type="submit" value="Add comment" />
+            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Comment can't be blank</p>
+        </form>
+    </div>
+    <div>
+        <h2>Title here</h2>
+        <div th:each=" comment : ${comments}">
+            <div th:text="${comment.getFormattedTimestamp}"></div>
+            <div>
+                <p th:text="${comment.content}">
+                </p>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

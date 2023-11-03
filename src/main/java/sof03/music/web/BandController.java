@@ -1,7 +1,5 @@
 package sof03.music.web;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import sof03.music.domain.Band;
 import sof03.music.domain.BandRepository;
-import sof03.music.domain.Song;
+import sof03.music.domain.Comment;
+import sof03.music.domain.CommentRepository;
 import sof03.music.domain.SongRepository;
 
 @CrossOrigin
@@ -24,6 +23,9 @@ public class BandController {
 
     @Autowired
     private SongRepository songRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     // list all bands
     @GetMapping("/bandlist")
@@ -38,8 +40,13 @@ public class BandController {
     public String showOneBand(@PathVariable("id") Long bandId, Model model) {
         Band band = bandRepository.findById(bandId).orElse(null);
         model.addAttribute("band", band);
-        List<Song> songs = songRepository.findByBand(band);
-        model.addAttribute("songs", songs);
+        model.addAttribute("songs", songRepository.findByBandOrderByPublicationYear(band));
+
+        // comment handling
+        model.addAttribute("comments", commentRepository.findByBand(band));
+        Comment comment = new Comment();
+        comment.setBand(band);
+        model.addAttribute("newComment", comment);
         return "bandinfo";
     }
 
@@ -56,8 +63,7 @@ public class BandController {
     public String saveBand(Band band) {
 
         bandRepository.save(band);
-        Long bandId = band.getBandId();
-        return "redirect:/bandinfo/" + bandId;
+        return "redirect:/bandinfo/" + band.getBandId();
     }
 
     // edit band information

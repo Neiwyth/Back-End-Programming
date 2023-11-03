@@ -30,7 +30,7 @@ public class Band {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "band")
     @JsonIgnoreProperties("band")
-    private List<BandComment> bandComments;
+    private List<Comment> comments;
 
     // orphanRemoval = true,
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "band")
@@ -106,12 +106,12 @@ public class Band {
         this.songs = songs;
     }
 
-    public List<BandComment> getBandComments() {
-        return bandComments;
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public void setBandComments(List<BandComment> bandComments) {
-        this.bandComments = bandComments;
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
 }

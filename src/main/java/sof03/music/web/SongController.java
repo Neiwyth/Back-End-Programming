@@ -27,6 +27,7 @@ public class SongController {
     // add new song for selected band
     @GetMapping("/addsong/{id}")
     public String addNewSong(@PathVariable("id") Long bandId, Model model) {
+
         Song newSong = new Song();
         Band band = bandRepository.findById(bandId).orElse(null);
         newSong.setBand(band);
@@ -37,14 +38,15 @@ public class SongController {
     // save new song
     @PostMapping("/savesong")
     public String saveSong(@ModelAttribute Song song) {
+
         songRepository.save(song);
-        Long bandId = song.getBand().getBandId();
-        return "redirect:/bandinfo/" + bandId;
+        return "redirect:/bandinfo/" + song.getBand().getBandId();
     }
 
     // delete one song
     @GetMapping("/deletesong/{id}")
     public String deleteSong(@PathVariable("id") Long songId) {
+
         Long bandId = songRepository.findById(songId).get().getBand().getBandId();
         songRepository.deleteById(songId);
         return "redirect:/bandinfo/" + bandId;
@@ -53,6 +55,7 @@ public class SongController {
     // edit a song
     @GetMapping("/editsong/{id}")
     public String editSong(@PathVariable("id") Long songId, Model model) {
+
         model.addAttribute("song", songRepository.findById(songId).orElse(null));
         return "editsong";
     }

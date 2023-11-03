@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Song {
@@ -23,6 +24,12 @@ public class Song {
     private int publicationYear;
     @Column(name = "album", nullable = false)
     private String album;
+    // @Transient
+    @Column(columnDefinition = "CLOB")
+    private String spotifyLink;
+    // @Transient
+    @Column(columnDefinition = "CLOB")
+    private String youtubeLink;
 
     @ManyToOne()
     @JsonIgnoreProperties("songs")
@@ -39,6 +46,16 @@ public class Song {
         this.publicationYear = publicationYear;
         this.album = album;
         this.band = band;
+    }
+
+    public Song(String songName, int publicationYear, String album, Band band, String spotifyLink, String youtubeLink) {
+        super();
+        this.songName = songName;
+        this.publicationYear = publicationYear;
+        this.album = album;
+        this.band = band;
+        this.spotifyLink = spotifyLink;
+        this.youtubeLink = youtubeLink;
     }
 
     public long getSongId() {
@@ -79,6 +96,22 @@ public class Song {
 
     public void setBand(Band band) {
         this.band = band;
+    }
+
+    public String getSpotifyLink() {
+        return spotifyLink;
+    }
+
+    public void setSpotifyLink(String spotifyLink) {
+        this.spotifyLink = spotifyLink;
+    }
+
+    public String getYoutubeLink() {
+        return youtubeLink;
+    }
+
+    public void setYoutubeLink(String youtubeLink) {
+        this.youtubeLink = youtubeLink;
     }
 
 }

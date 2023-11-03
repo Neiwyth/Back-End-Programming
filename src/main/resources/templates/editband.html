@@ -9,7 +9,7 @@
 <body>
     <form th:object="${band}" th:action="@{/saveband}" method="post">
         <caption>
-            <h1 th:text="${band.bandName}"></h1>
+            <h1 th:text="'Edit band ' + ${band.bandName}"></h1>
         </caption>
         <div>
             <input type="hidden" th:field="*{bandId}" />

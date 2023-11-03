@@ -9,13 +9,10 @@
 <body>
     <form th:object="${song}" th:action="@{/savesong}" method="post">
         <caption>
-            <h1 th:text="${song.songName}"></h1>
+            <h1 th:text="'Edit song ' + ${song.songName}"></h1>
         </caption>
         <div>
-            <input type="hidden" th:field="${song.band.bandId}" />
-            <input type="hidden" th:field="${song.band.countryOfOrigin}" />
-            <input type="hidden" th:field="${song.band.genre}" />
-            <input type="hidden" th:field="${song.band.yearFormed}" />
+            <input type="hidden" th:field="${song.band}" />
         </div>
         <div>
             <input type="hidden" th:field="*{songId}" />
