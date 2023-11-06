@@ -11,6 +11,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Band {
@@ -19,12 +22,17 @@ public class Band {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = true)
     private long bandId;
+    @NotBlank
     @Column(name = "name", nullable = false)
     private String bandName;
+    @Min(value = 1900, message = "valid values are between 1900 and 2021")
+    @Max(value = 2021, message = "valid values are between 1900 and 2021")
     @Column(name = "formed", nullable = false)
     private int yearFormed;
+    @NotBlank
     @Column(name = "country", nullable = false)
     private String countryOfOrigin;
+    @NotBlank
     @Column(name = "genre", nullable = false)
     private String genre;
 

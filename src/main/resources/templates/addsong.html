@@ -20,14 +20,17 @@
             <div>
                 <label>*Song name:</label>
                 <input type="text" id="songName" th:field="*{songName}" required />
+                <span th:if="${#fields.hasErrors('songName')}" th:errors="*{songName}"></span>
             </div>
             <div>
                 <label>*Published:</label>
                 <input type="text" id="publicationYear" th:field="*{publicationYear}" required />
+                <span th:if="${#fields.hasErrors('publicationYear')}" th:errors="*{publicationYear}"></span>
             </div>
             <div>
                 <label>*Album:</label>
                 <input type="text" id="album" th:field="*{album}" required />
+                <span th:if="${#fields.hasErrors('album')}" th:errors="*{album}"></span>
             </div>
             <input type="submit" value="Add" />
             <input type="reset" value="Clear" />

@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Comment {
@@ -25,7 +26,8 @@ public class Comment {
     @Column(name = "id", nullable = false, updatable = true)
     private long commentId;
     @NotBlank
-    @Column(name = "comment", nullable = false)
+    @Size(min = 3, max = 150)
+    @Column(name = "comment")
     private String content;
     @Column(name = "timestamp", nullable = false)
     private Timestamp timestamp;
@@ -67,8 +69,8 @@ public class Comment {
     }
 
     public String getFormattedTimestamp() {
-        Locale locale = new Locale("en");
-        return new SimpleDateFormat("MMM d. yyyy 'at' HH:mm", locale).format(timestamp);
+        Locale locale = new Locale("en, UK");
+        return new SimpleDateFormat("MMM d. yyyy 'at' h:mm a", locale).format(timestamp);
     }
 
     public void setTimestamp(Timestamp timestamp) {

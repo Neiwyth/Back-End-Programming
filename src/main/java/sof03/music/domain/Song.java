@@ -9,7 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+// import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Song {
@@ -18,11 +21,15 @@ public class Song {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = true)
     private long songId;
+    @NotBlank
     @Column(name = "name", nullable = false)
     private String songName;
-    @Column(name = "published", nullable = false)
+    @Min(value = 1900, message = "valid values are between 1900 and 2023")
+    @Max(value = 2023, message = "valid values are between 1900 and 2023")
+    @Column(name = "published")
     private int publicationYear;
-    @Column(name = "album", nullable = false)
+    @NotBlank
+    @Column(name = "album")
     private String album;
     // @Transient
     @Column(columnDefinition = "CLOB")

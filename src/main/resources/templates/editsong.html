@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <form th:object="${song}" th:action="@{/savesong}" method="post">
+    <form th:object="${song}" th:action="@{/savesongedit}" method="post">
         <caption>
             <h1 th:text="'Edit song ' + ${song.songName}"></h1>
         </caption>
@@ -20,14 +20,17 @@
         <div>
             <label>*Name:</label>
             <input type="text" id="songName" th:field="*{songName}" required />
+            <span th:if="${#fields.hasErrors('songName')}" th:errors="*{songName}"></span>
         </div>
         <div>
             <label>*Published:</label>
             <input type="text" id="publicationYear" th:field="*{publicationYear}" required />
+            <span th:if="${#fields.hasErrors('publicationYear')}" th:errors="*{publicationYear}"></span>
         </div>
         <div>
             <label>*Album:</label>
             <input type="text" id="album" th:field="*{album}" required />
+            <span th:if="${#fields.hasErrors('album')}" th:errors="*{album}"></span>
         </div>
         <div>
             <label>Band:</label>

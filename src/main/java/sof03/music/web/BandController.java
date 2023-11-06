@@ -3,11 +3,14 @@ package sof03.music.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.validation.Valid;
 import sof03.music.domain.Band;
 import sof03.music.domain.BandRepository;
 import sof03.music.domain.Comment;
@@ -44,9 +47,9 @@ public class BandController {
 
         // comment handling
         model.addAttribute("comments", commentRepository.findByBand(band));
-        Comment comment = new Comment();
-        comment.setBand(band);
-        model.addAttribute("newComment", comment);
+        Comment newComment = new Comment();
+        newComment.setBand(band);
+        model.addAttribute("newComment", newComment);
         return "bandinfo";
     }
 
@@ -58,12 +61,18 @@ public class BandController {
         return "addband";
     }
 
-    // save new band or save edits for existing band
+    // save new band
     @PostMapping("/saveband")
-    public String saveBand(Band band) {
+    public String saveBand(@Valid @ModelAttribute("band") Band band, BindingResult bindingResult, Model model) {
 
-        bandRepository.save(band);
-        return "redirect:/bandinfo/" + band.getBandId();
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("band", band);
+            return "addband";
+        } else {
+
+            bandRepository.save(band);
+            return "redirect:/bandinfo/" + band.getBandId();
+        }
     }
 
     // edit band information
@@ -71,6 +80,21 @@ public class BandController {
     public String editBand(@PathVariable("id") Long bandId, Model model) {
         model.addAttribute("band", bandRepository.findById(bandId).orElse(null));
         return "editband";
+    }
+
+    // save edited band
+    @PostMapping("/savebandedit")
+    public String saveEditedSong(@Valid @ModelAttribute("band") Band band, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("song", band);
+            return "editband";
+
+        } else {
+
+            bandRepository.save(band);
+            return "redirect:/bandinfo/" + band.getBandId();
+        }
     }
 
     // delete band and all songs associated with the band

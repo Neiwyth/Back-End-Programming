@@ -11,6 +11,7 @@
 
     <h1 th:text="${band.bandName}"></h1>
     <a th:href="@{/addsong/{id}(id=${band.bandId})}">New Song</a>
+    <a th:href="@{/editband/{id}(id=${band.bandId})}">Edit</a>
 
     <table>
         <thead>
@@ -62,20 +63,20 @@
 
     <div>
         <h2>Leave a comment</h2>
-        <form th:object="${newComment}" th:action="@{/savecomment}" method="post">
+        <form th:object="${newComment}" th:action="@{/savecomment}" method="post" action="#">
             <input type="hidden" th:field="${newComment.band}" th:value="${newComment.band}" />
             <textarea style="resize: none; " cols="60" rows="7" th:field="*{content}" required></textarea><br />
             <input type="submit" value="Add comment" />
-            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Comment can't be blank</p>
+            <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
         </form>
     </div>
     <div>
         <h2>Title here</h2>
         <div th:each=" comment : ${comments}">
-            <div th:text="${comment.getFormattedTimestamp}"></div>
+            <span th:text="${comment.getFormattedTimestamp}"></span>
+            <span><a th:href="@{/deletecomment/{id}(id=${comment.commentId})}">Delete</a></span>
             <div>
-                <p th:text="${comment.content}">
-                </p>
+                <p th:text="${comment.content}"></p>
             </div>
         </div>
     </div>
