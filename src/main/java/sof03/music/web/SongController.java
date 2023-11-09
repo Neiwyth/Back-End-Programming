@@ -1,6 +1,7 @@
 package sof03.music.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,7 @@ public class SongController {
 
     // add new song for selected band
     @GetMapping("/addsong/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
     public String addNewSong(@PathVariable("id") Long bandId, Model model) {
 
         Song newSong = new Song();
@@ -54,6 +56,7 @@ public class SongController {
 
     // delete one song
     @GetMapping("/deletesong/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteSong(@PathVariable("id") Long songId) {
 
         Long bandId = songRepository.findById(songId).get().getBand().getBandId();
@@ -63,6 +66,7 @@ public class SongController {
 
     // edit a song
     @GetMapping("/editsong/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String editSong(@Valid @PathVariable("id") Long songId, Model model) {
 
         model.addAttribute("song", songRepository.findById(songId).orElse(null));

@@ -40,7 +40,6 @@ public class Band {
     @JsonIgnoreProperties("band")
     private List<Comment> comments;
 
-    // orphanRemoval = true,
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "band")
     @JsonIgnoreProperties("band")
     private List<Song> songs;

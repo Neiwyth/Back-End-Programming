@@ -1,17 +1,20 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
-    <title></title>
+    <title>Band information</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <h2>Logged in as <span sec:authentication="name"></span></h2>
 </head>
 
 <body>
     <button onclick="location.href='/bandlist'">Back</button>
 
     <h1 th:text="${band.bandName}"></h1>
-    <a th:href="@{/addsong/{id}(id=${band.bandId})}">New Song</a>
-    <a th:href="@{/editband/{id}(id=${band.bandId})}">Edit</a>
+    <a sec:authorize="hasAuthority('ADMIN') || hasAuthority('USER')" th:href="@{/addsong/{id}(id=${band.bandId})}">New
+        Song</a>
+    <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/editband/{id}(id=${band.bandId})}">Edit</a>
 
     <table>
         <thead>
@@ -48,13 +51,21 @@
                 <td th:text="${song.publicationYear}"></td>
                 <td th:text="${song.album}"></td>
                 <td>
-                    <!-- <a th:href="@{song.spotifyLink}" target="_blank"><img
-                            src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" /></a> -->
-                    <!-- <a th:href="${song.spotifyLink}" th:text="${song.spotifyLink}"></a>
-                    <a th:href="@{song.youtubeLink}" th:utext="${song.youtubeLink}"></a> -->
+                    <span th:if="${song.spotifyLink}">
+                        <a th:href="${song.spotifyLink}">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
+                                style="height: 25px; width: 25px;" /></a>
+                    </span>
+                    <span th:if="${song.youtubeLink}">
+                        <a th:href="${song.youtubeLink}" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg"
+                                style="height: 25px; width: 25px;" /></a>
+                    </span>
                 </td>
-                <td><a th:href="@{/editsong/{id}(id=${song.songId})}">Edit</a></td>
-                <td>
+                <td sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/editsong/{id}(id=${song.songId})}">Edit</a>
+                </td>
+                <td sec:authorize="hasAuthority('ADMIN')">
                     <a th:href="@{/deletesong/{id}(id=${song.songId})}">Delete</a>
                 </td>
             </tr>
@@ -62,8 +73,9 @@
     </table>
 
     <div>
-        <h2>Leave a comment</h2>
-        <form th:object="${newComment}" th:action="@{/savecomment}" method="post" action="#">
+        <form sec:authorize="isAuthenticated()" th:object="${newComment}" th:action="@{/savecomment}" method="post"
+            action="#">
+            <h2>Leave a comment</h2>
             <input type="hidden" th:field="${newComment.band}" th:value="${newComment.band}" />
             <textarea style="resize: none; " cols="60" rows="7" th:field="*{content}" required></textarea><br />
             <input type="submit" value="Add comment" />
@@ -73,10 +85,13 @@
     <div>
         <h2>Title here</h2>
         <div th:each=" comment : ${comments}">
-            <span th:text="${comment.getFormattedTimestamp}"></span>
-            <span><a th:href="@{/deletecomment/{id}(id=${comment.commentId})}">Delete</a></span>
+            <b><span style="display: inline-block; width: 200px; font-size: 1.2em;"
+                    th:text="${comment.user.userName}"></span></b>
+            <span style="display: inline-block; width: 180px;" th:text="${comment.getFormattedTimestamp}"></span>
+            <span><a sec:authorize="hasAuthority('ADMIN')"
+                    th:href="@{/deletecomment/{id}(id=${comment.commentId})}">Delete</a></span>
             <div>
-                <p th:text="${comment.content}"></p>
+                <p th:text="'&emsp;' + ${comment.content}"></p>
             </div>
         </div>
     </div>

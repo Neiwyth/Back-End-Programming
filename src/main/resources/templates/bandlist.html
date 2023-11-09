@@ -1,9 +1,13 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <title>Bandlist</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <h2>Logged in as <span sec:authentication="name"></span></h2>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout" />
+    </form>
 </head>
 
 <body>
@@ -11,15 +15,18 @@
         <table>
             <caption>
                 <h1>Bands</h1>
-                <input type="submit" value="New Band" onclick="location.href='/addband'" />
+                <input sec:authorize="hasAuthority('ADMIN') || hasAuthority('USER')" type="submit" value="New Band"
+                    onclick="location.href='/addband'" />
             </caption>
             <tbody>
                 <tr th:each=" band : ${bands}">
                     <td>
                         <a th:href="@{/bandinfo/{id}(id=${band.bandId})}" th:text="${band.bandName}"></a>
                     </td>
-                    <td><a th:href="@{/editband/{id}(id=${band.bandId})}">Edit</a></td>
-                    <td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
+                        <a th:href="@{/editband/{id}(id=${band.bandId})}">Edit</a>
+                    </td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
                         <a th:href="@{/deleteband/{id}(id=${band.bandId})}">Delete</a>
                     </td>
                 </tr>

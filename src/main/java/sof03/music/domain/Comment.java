@@ -37,15 +37,21 @@ public class Comment {
     @JoinColumn(name = "bandId")
     private Band band;
 
+    @ManyToOne
+    @JsonIgnoreProperties({ "comments", "password", "role" })
+    @JoinColumn(name = "userId")
+    private User user;
+
     public Comment() {
         super();
     }
 
-    public Comment(String content, Timestamp timestamp, Band band) {
+    public Comment(String content, Timestamp timestamp, Band band, User user) {
         super();
         this.content = content;
         this.timestamp = timestamp;
         this.band = band;
+        this.user = user;
     }
 
     public long getCommentId() {
@@ -83,6 +89,14 @@ public class Comment {
 
     public void setBand(Band band) {
         this.band = band;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }
