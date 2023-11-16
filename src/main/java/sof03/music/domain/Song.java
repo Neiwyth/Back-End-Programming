@@ -31,10 +31,8 @@ public class Song {
     @NotBlank
     @Column(name = "album")
     private String album;
-    // @Transient
     @Column(columnDefinition = "CLOB")
     private String spotifyLink;
-    // @Transient
     @Column(columnDefinition = "CLOB")
     private String youtubeLink;
 

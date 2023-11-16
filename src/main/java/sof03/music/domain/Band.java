@@ -2,6 +2,7 @@ package sof03.music.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -37,7 +38,7 @@ public class Band {
     private String genre;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "band")
-    @JsonIgnoreProperties("band")
+    @JsonIgnore
     private List<Comment> comments;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "band")
@@ -56,6 +57,17 @@ public class Band {
         this.genre = genre;
     }
 
+    // for json
+    public Band(Long bandId, String bandName, int yearFormed, String countryOfOrigin, String genre) {
+        super();
+        this.bandId = bandId;
+        this.bandName = bandName;
+        this.yearFormed = yearFormed;
+        this.countryOfOrigin = countryOfOrigin;
+        this.genre = genre;
+    }
+
+    // for json
     public Band(String bandName, int yearFormed, String countryOfOrigin, String genre, List<Song> songs) {
         super();
         this.bandName = bandName;
