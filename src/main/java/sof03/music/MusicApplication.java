@@ -189,18 +189,6 @@ public class MusicApplication {
 			commentRepository.save(new Comment("Pain remains trilogy is my new favorite song",
 					Timestamp.valueOf("2023-2-1 13:37:00"), band1, testUser));
 
-			// for the endproduct
-			// User testUser = new User("TestUser",
-			// "$2a$10$GberO6sbP3U9RyhuupR8UeQh5AlsxBu4dQ/cY8QrqwZWbX1lXwBYO",
-			// "USER");
-			// userRepository.save(testUser);
-
-			// for the endproduct
-			// User admin = new User("Admin",
-			// "$2a$10$WPbpwJw7NQ.nxOpR1O9riu7.Ir10/p2vZi29eFi6tmZayGQoIxs4K",
-			// "ADMIN");
-			// userRepository.save(admin);
-
 		};
 	}
 }
