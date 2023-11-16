@@ -29,6 +29,8 @@
                     <p th:if="${param.error}">Invalid username or password</p>
                     <input class="btn btn-sm btn-success" type="submit" value="Log In" />
                     <a class="btn btn-sm btn-info" th:href="@{/signup}">Sign Up</a>
+                    <input class="btn btn-sm btn-secondary" type="button" value="Back"
+                        onclick="location.href='/bandlist'" />
                 </div>
             </form>
         </div>
