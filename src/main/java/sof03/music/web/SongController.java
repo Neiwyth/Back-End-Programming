@@ -1,25 +1,29 @@
 package sof03.music.web;
 
+import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
 import sof03.music.domain.Band;
 import sof03.music.domain.BandRepository;
 import sof03.music.domain.Song;
 import sof03.music.domain.SongRepository;
 
-@CrossOrigin
 @Controller
 public class SongController {
+
+    private static final String spotifyRegex = "^spotify:track:[a-zA-Z0-9]+$";
+    private static final String youtubeRegex = "^(https?://)?(www\\.)?youtube\\.com/.+";
 
     @Autowired
     SongRepository songRepository;
@@ -29,7 +33,7 @@ public class SongController {
 
     // add new song for selected band
     @GetMapping("/addsong/{id}")
-    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public String addNewSong(@PathVariable("id") Long bandId, Model model) {
 
         Song newSong = new Song();
@@ -42,6 +46,16 @@ public class SongController {
     // save new song
     @PostMapping("/savesong")
     public String saveSong(@Valid @ModelAttribute("newSong") Song song, BindingResult bindingResult, Model model) {
+
+        if (StringUtils.isNotBlank(song.getSpotifyLink()) && !Pattern.matches(spotifyRegex, song.getSpotifyLink())) {
+            bindingResult.rejectValue("spotifyLink", "err.spotifyLink",
+                    "Invalid spotify link, please use the spotify-URI format (spotify:track:)");
+        }
+
+        if (StringUtils.isNotBlank(song.getYoutubeLink()) && !Pattern.matches(youtubeRegex, song.getYoutubeLink())) {
+            bindingResult.rejectValue("youtubeLink", "err.youtubeLink",
+                    "Invalid youtube link, please use full https:// link");
+        }
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("newSong", song);
@@ -59,9 +73,10 @@ public class SongController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteSong(@PathVariable("id") Long songId) {
 
-        Long bandId = songRepository.findById(songId).get().getBand().getBandId();
+        Song deletedSong = songRepository.findById(songId).orElse(null);
+        Long bandId = deletedSong.getBand().getBandId();
         songRepository.deleteById(songId);
-        return "redirect:/bandinfo/" + songRepository.findById(bandId).get().getBand().getBandId();
+        return "redirect:/bandinfo/" + bandId;
     }
 
     // edit a song

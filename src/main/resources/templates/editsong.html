@@ -4,42 +4,61 @@
 <head>
     <title>Bandlist</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css.bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <style>
+        .color {
+            background-color: rgba(219, 198, 169, 100%);
+        }
+    </style>
 </head>
 
-<body>
-    <form th:object="${song}" th:action="@{/savesongedit}" method="post">
-        <caption>
-            <h1 th:text="'Edit song ' + ${song.songName}"></h1>
-        </caption>
-        <div>
-            <input type="hidden" th:field="${song.band}" />
+<body class="color">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4" th:text="'Edit song ' + ${song.songName}"></h1>
+        <div class="row justify-content-center">
+            <form class="col-md-4" th:object="${song}" th:action="@{/savesongedit}" method="post">
+                <div class="mb-3">
+                    <input type="hidden" th:field="${song.band}" />
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="hidden" th:field="*{songId}" />
+                </div>
+                <div class="mb-3">
+                    <label>Name</label>
+                    <input class="form-control" type="text" id="songName" th:field="*{songName}" required />
+                    <span th:if="${#fields.hasErrors('songName')}" th:errors="*{songName}"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Published:</label>
+                    <input class="form-control" type="text" id="publicationYear" th:field="*{publicationYear}"
+                        required />
+                    <span th:if="${#fields.hasErrors('publicationYear')}" th:errors="*{publicationYear}"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Album</label>
+                    <input class="form-control" type="text" id="album" th:field="*{album}" required />
+                    <span th:if="${#fields.hasErrors('album')}" th:errors="*{album}"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Spotify</label>
+                    <input class="form-control" type="text" id="spotifyLink" th:field="*{spotifyLink}" />
+                    <span th:if="${#fields.hasErrors('spotifyLink')}" th:errors="*{spotifyLink}"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Youtube</label>
+                    <input class="form-control" type="text" id="youtubeLink" th:field="*{youtubeLink}" />
+                    <span th:if="${#fields.hasErrors('youtubeLink')}" th:errors="*{youtubeLink}"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Band:</label>
+                    <input class="form-control" type="text" id="bandName" th:field="${song.band.bandName}" readonly />
+                </div>
+                <input class="btn btn-sm btn-primary" type="submit" value="Save" />
+                <a class="btn btn-sm btn-secondary" th:href="@{/bandinfo/{id}(id=${song.band.bandId})}">Back</a>
+            </form>
         </div>
-        <div>
-            <input type="hidden" th:field="*{songId}" />
-        </div>
-        <div>
-            <label>*Name:</label>
-            <input type="text" id="songName" th:field="*{songName}" required />
-            <span th:if="${#fields.hasErrors('songName')}" th:errors="*{songName}"></span>
-        </div>
-        <div>
-            <label>*Published:</label>
-            <input type="text" id="publicationYear" th:field="*{publicationYear}" required />
-            <span th:if="${#fields.hasErrors('publicationYear')}" th:errors="*{publicationYear}"></span>
-        </div>
-        <div>
-            <label>*Album:</label>
-            <input type="text" id="album" th:field="*{album}" required />
-            <span th:if="${#fields.hasErrors('album')}" th:errors="*{album}"></span>
-        </div>
-        <div>
-            <label>Band:</label>
-            <input type="text" id="bandName" th:field="${song.band.bandName}" readonly />
-        </div>
-        <input type="submit" value="Save" />
-        <a th:href="@{/bandinfo/{id}(id=${song.band.bandId})}">Back</a>
-    </form>
-
+    </div>
 </body>
 
 </html>

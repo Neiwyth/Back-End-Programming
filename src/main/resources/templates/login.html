@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <title>Bandlist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css.bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+
+<body>
+    <div>
+        <h1>Log In</h1>
+        <form th:action="@{/login}" method="post">
+            <div>
+                <input type="text" name="username" placeholder="Username" />
+            </div>
+            <div>
+                <input type="password" name="password" placeholder="Password" />
+            </div>
+            <div>
+                <p th:if="${param.error}">Invalid username or password</p>
+                <input type="submit" value="Log In" />
+                <a th:href="@{/signup}">Sign Up</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

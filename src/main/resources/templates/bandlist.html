@@ -4,24 +4,53 @@
 <head>
     <title>Bandlist</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <h2>Logged in as <span sec:authentication="name"></span></h2>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Logout" />
-    </form>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css.bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <style>
+        .color {
+            background-color: rgba(219, 198, 169, 100%);
+        }
+
+        th,
+        tr,
+        td {
+            background-color: rgba(219, 198, 169, 100%) !important;
+            color: black !important;
+        }
+    </style>
 </head>
 
-<body>
-    <div>
-        <table>
-            <caption>
-                <h1>Bands</h1>
-                <input sec:authorize="hasAuthority('ADMIN') || hasAuthority('USER')" type="submit" value="New Band"
-                    onclick="location.href='/addband'" />
-            </caption>
+<header>
+    <div class="d-flex justify-content-end align-items-center px-1" sec:authorize="!isAuthenticated()">
+        <h2 class="mx-5"><span>Guest</span></h2>
+        <a class="btn btn-sm btn-primary mx-1" th:href="@{/login}">Login</a>
+        <a class="btn btn-sm btn-success" th:href="@{/signup}">Sign Up</a>
+    </div>
+    <div class="d-flex justify-content-end align-items-center px-1" sec:authorize="isAuthenticated()">
+        <h2 class="mx-5"><span sec:authentication="name"></h2></span>
+        <form th:action="@{/logout}" method="post">
+            <input class="btn btn-sm btn-danger" type="submit" value="Logout" />
+        </form>
+    </div>
+</header>
+
+<body class="color">
+    <div class="container">
+        <table class="table table-sm table-borderless text-center w-25 mx-auto">
+            <thead>
+                <tr>
+                    <th colspan="3">
+                        <h1 class="mx-5">Bands</h1>
+                        <a style="width: 80px;" class="btn btn-sm btn-info" th:href="@{/addband}"
+                            sec:authorize="hasAnyAuthority('ADMIN', 'USER')">New Band</a>
+                    </th>
+                </tr>
+            </thead>
             <tbody>
                 <tr th:each=" band : ${bands}">
                     <td>
-                        <a th:href="@{/bandinfo/{id}(id=${band.bandId})}" th:text="${band.bandName}"></a>
+                        <a class="link-body-emphasis link-offset-1 link-underline-opacity-25 link-underline-opacity-100-hover"
+                            th:href="@{/bandinfo/{id}(id=${band.bandId})}" th:text="${band.bandName}"></a>
                     </td>
                     <td sec:authorize="hasAuthority('ADMIN')">
                         <a th:href="@{/editband/{id}(id=${band.bandId})}">Edit</a>

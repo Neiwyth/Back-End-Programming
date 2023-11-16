@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
@@ -15,8 +14,7 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 import sof03.music.web.UserDetailsServiceImpl;
 
 @Configuration
-@EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
         @Autowired
@@ -27,9 +25,11 @@ public class WebSecurityConfig {
 
                 http
                                 .authorizeHttpRequests(authorize -> authorize
+                                                .requestMatchers(antMatcher("/css/**")).permitAll()
+                                                .requestMatchers(antMatcher("/signup")).anonymous()
+                                                .requestMatchers(antMatcher("/saveuser")).anonymous()
                                                 .requestMatchers(antMatcher("/bandlist")).permitAll()
                                                 .requestMatchers(antMatcher("/bandinfo/**")).permitAll()
-                                                .requestMatchers(antMatcher("/css/**")).permitAll()
                                                 .requestMatchers(toH2Console()).permitAll()
                                                 .anyRequest().authenticated())
                                 .csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()))
@@ -37,6 +37,7 @@ public class WebSecurityConfig {
                                                 .frameOptions(frameOptions -> frameOptions
                                                                 .disable()))
                                 .formLogin(formLogin -> formLogin
+                                                .loginPage("/login")
                                                 .defaultSuccessUrl("/bandlist", true)
                                                 .permitAll())
                                 .logout(logout -> logout

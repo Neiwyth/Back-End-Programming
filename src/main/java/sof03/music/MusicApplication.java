@@ -64,35 +64,35 @@ public class MusicApplication {
 
 			songRepository.save(new Song("Pain Remains I: Dancing Like Flames", 2022, "Pain Remains", band1,
 					"spotify:track:227jOVNY1MrE5MkUcQRhsk",
-					"https://www.youtube.com/watch?v=ip5JHn2jONY&list"));
+					"https://www.youtube.com/watch?v=JglOS8TRFp4"));
 			songRepository.save(new Song("Pain Remains II: After All I've Done, I'll Return Disappear", 2022,
 					"Pain Remains", band1, "spotify:track:7IpJQhwrB4OYTYwOCiOxIs",
-					"https://www.youtube.com/watch?v=EOugbQC1r0s&list"));
+					"https://www.youtube.com/watch?v=JFJ5fF7cbE0"));
 			songRepository.save(new Song("Pain Remains III: In a Sea of Fire", 2022, "Pain Remains", band1,
 					"spotify:track:6wgKN7mUq1CvQBnQKzjeKt",
-					"https://www.youtube.com/watch?v=viX4JfQ3qPs&list"));
+					"https://www.youtube.com/watch?v=BLptZzEXc68"));
 			songRepository.save(new Song("Cursed to Die", 2022, "Pain Remains", band1,
 					"spotify:track:1nqXQo7YXVQsUBflLauyzI",
-					"https://www.youtube.com/watch?v=C7vk33ouN1A&list"));
+					"https://www.youtube.com/watch?v=C7vk33ouN1A"));
 			songRepository.save(new Song("Wrath", 2022, "Pain Remains", band1, "spotify:track:088lNGrrwYCmZ3Y21RZfNl",
-					"https://www.youtube.com/watch?v=rv47EriDtAI&list"));
+					"https://www.youtube.com/watch?v=rv47EriDtAI"));
 			songRepository.save(new Song("To the Hellfire", 2021, "...And I Return to Nothingness", band1,
 					"spotify:track:5UpDvqyZnhdWY16L8HY6fw",
 					"https://www.youtube.com/watch?v=R7WhvrALBoY&list"));
 			songRepository.save(new Song("Immortal", 2019, "Immortal", band1, "spotify:track:6BlKRhk5hnrQ7HKrsPEesI",
-					"https://www.youtube.com/watch?v=WwMnj0xTTlw&list"));
+					"https://www.youtube.com/watch?v=WwMnj0xTTlw"));
 			songRepository.save(new Song("CADAVER", 2018, "CHANGE OF GENERATION", band2,
 					"spotify:track:0v3TouyabYk2ISBhzq4qdY", "https://www.youtube.com/watch?v=-3W5kxNnwOU"));
 			songRepository.save(new Song("REVADAC", 2018, "CHANGE OF GENERATION", band2,
 					"spotify:track:1O7il5YDUAFBFoHhPjqHXG", "https://www.youtube.com/watch?v=FEk_Xp7zygs"));
 			songRepository.save(new Song("Black Pentagram", 2018, "CHANGE OF GENERATION", band2,
 					"spotify:track:29fKxzShkZ56Mf5xpO9vxe",
-					"https://www.youtube.com/watch?v=V8i_QhOgsKw&list"));
+					"https://www.youtube.com/watch?v=V8i_QhOgsKw"));
 			songRepository.save(new Song("imagimak", 2014, "Affected", band2, "spotify:track:7ud10eoJQCRXulTc80UrVr",
-					"https://www.youtube.com/watch?v=F0D4rub3T6Q&list"));
+					"https://www.youtube.com/watch?v=F0D4rub3T6Q"));
 			songRepository.save(new Song("Unending Sorceress", 2020, "Unfinished", band2,
 					"spotify:track:22pXPe93huo02Oad3dKvco",
-					"https://www.youtube.com/watch?v=PCv3s0T4bx0&list"));
+					"https://www.youtube.com/watch?v=PCv3s0T4bx0"));
 			songRepository.save(new Song("六兆年と一夜物語", 2020, "軌跡 BEST COLLECTION II", band3,
 					"spotify:track:1DlMfEEDOymsvLSGp9KKuO", "https://www.youtube.com/watch?v=T4RHuXd5pMg"));
 			songRepository.save(new Song("天樂", 2020, "軌跡 BEST COLLECTION II", band3,

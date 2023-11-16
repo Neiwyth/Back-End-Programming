@@ -26,7 +26,7 @@ public class Comment {
     @Column(name = "id", nullable = false, updatable = true)
     private long commentId;
     @NotBlank
-    @Size(min = 3, max = 150)
+    @Size(min = 3, max = 500)
     @Column(name = "comment")
     private String content;
     @Column(name = "timestamp", nullable = false)

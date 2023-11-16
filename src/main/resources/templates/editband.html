@@ -4,40 +4,51 @@
 <head>
     <title>Bandlist</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css.bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <style>
+        .color {
+            background-color: rgba(219, 198, 169, 100%);
+        }
+    </style>
 </head>
 
-<body>
-    <form th:object="${band}" th:action="@{/savebandedit}" method="post">
-        <caption>
-            <h1 th:text="'Edit band ' + ${band.bandName}"></h1>
-        </caption>
-        <div>
-            <input type="hidden" th:field="*{bandId}" />
+<body class="color">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4" th:text="'Edit band ' + ${band.bandName}"></h1>
+        <div class="row justify-content-center">
+            <form class="col-md-4" th:object="${band}" th:action="@{/savebandedit}" method="post">
+                <div class="mb-3">
+                    <input type="hidden" th:field="*{bandId}" />
+                </div>
+                <div class="mb-3">
+                    <label>Name</label>
+                    <input class="form-control" type="text" id="bandName" th:field="*{bandName}" required />
+                    <span th:if="${#fields.hasErrors('bandName')}" th:errors="*{bandName}"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Formed</label>
+                    <input class="form-control" type="text" id="yearFormed" th:field="*{yearFormed}" required />
+                    <span th:if="${#fields.hasErrors('yearFormed')}" th:errors="*{yearFormed}"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Country</label>
+                    <input class="form-control" type="text" id="countryOfOrigin" th:field="*{countryOfOrigin}"
+                        required />
+                    <span th:if="${#fields.hasErrors('countryOfOrigin')}" th:errors="*{countryOfOrigin}"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Genre</label>
+                    <input class="form-control" type="text" id="genre" th:field="*{genre}" required />
+                    <span th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></span>
+                </div>
+                <div class="mb-3">
+                    <input class="btn btn-sm btn-primary" type="submit" value="Save" />
+                    <a class="btn btn-sm btn-secondary" th:href="@{/bandinfo/{id}(id=${band.bandId})}">Back</a>
+                </div>
+            </form>
         </div>
-        <div>
-            <label>*Name:</label>
-            <input type="text" id="bandName" th:field="*{bandName}" required />
-            <span th:if="${#fields.hasErrors('bandName')}" th:errors="*{bandName}"></span>
-        </div>
-        <div>
-            <label>*Formed:</label>
-            <input type="text" id="yearFormed" th:field="*{yearFormed}" required />
-            <span th:if="${#fields.hasErrors('yearFormed')}" th:errors="*{yearFormed}"></span>
-        </div>
-        <div>
-            <label>*Country:</label>
-            <input type="text" id="countryOfOrigin" th:field="*{countryOfOrigin}" required />
-            <span th:if="${#fields.hasErrors('countryOfOrigin')}" th:errors="*{countryOfOrigin}"></span>
-        </div>
-        <div>
-            <label>*Genre:</label>
-            <input type="text" id="genre" th:field="*{genre}" required />
-            <span th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></span>
-        </div>
-        <input type="submit" value="Save" />
-        <a th:href="@{/bandinfo/{id}(id=${band.bandId})}">Back</a>
-    </form>
-
+    </div>
 </body>
 
 </html>

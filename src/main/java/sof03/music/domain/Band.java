@@ -25,8 +25,8 @@ public class Band {
     @NotBlank
     @Column(name = "name", nullable = false)
     private String bandName;
-    @Min(value = 1900, message = "valid values are between 1900 and 2021")
-    @Max(value = 2021, message = "valid values are between 1900 and 2021")
+    @Min(value = 1900, message = "valid values are between 1900 and 2023")
+    @Max(value = 2023, message = "valid values are between 1900 and 2023")
     @Column(name = "formed", nullable = false)
     private int yearFormed;
     @NotBlank

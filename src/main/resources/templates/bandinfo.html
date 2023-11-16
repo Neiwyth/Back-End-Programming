@@ -5,97 +5,161 @@
     <title>Band information</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <h2>Logged in as <span sec:authentication="name"></span></h2>
+    <link rel="stylesheet" type="text/css" href="/css.bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <style>
+        .color {
+            background-color: rgba(219, 198, 169, 100%);
+        }
+
+        th,
+        tr,
+        td {
+            background-color: rgba(219, 198, 169, 100%) !important;
+            color: black !important;
+        }
+
+        .commentbox {
+            max-width: 500px;
+            border: 2px solid #8f8f8f;
+            border-radius: 10px;
+            background-color: #dbd9d9;
+            margin-bottom: 5px;
+            margin-left: 2px;
+        }
+    </style>
 </head>
 
-<body>
-    <button onclick="location.href='/bandlist'">Back</button>
-
-    <h1 th:text="${band.bandName}"></h1>
-    <a sec:authorize="hasAuthority('ADMIN') || hasAuthority('USER')" th:href="@{/addsong/{id}(id=${band.bandId})}">New
-        Song</a>
-    <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/editband/{id}(id=${band.bandId})}">Edit</a>
-
-    <table>
-        <thead>
-            <tr>
-                <td>Year formed</td>
-                <td>Country</td>
-                <td>Genre</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td th:text="${band.yearFormed}"></td>
-                <td th:text="${band.countryOfOrigin}"></td>
-                <td th:text="${band.genre}"></td>
-            </tr>
-        </tbody>
-    </table>
-
-
-    <h2>Songlist</h2>
-
-    <table>
-        <thead>
-            <tr>
-                <td>Song name</td>
-                <td>Year</td>
-                <td>Album</td>
-                <td>Listen</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each=" song : ${songs}">
-                <td th:text="${song.songName}"></td>
-                <td th:text="${song.publicationYear}"></td>
-                <td th:text="${song.album}"></td>
-                <td>
-                    <span th:if="${song.spotifyLink}">
-                        <a th:href="${song.spotifyLink}">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
-                                style="height: 25px; width: 25px;" /></a>
-                    </span>
-                    <span th:if="${song.youtubeLink}">
-                        <a th:href="${song.youtubeLink}" target="_blank">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg"
-                                style="height: 25px; width: 25px;" /></a>
-                    </span>
-                </td>
-                <td sec:authorize="hasAuthority('ADMIN')">
-                    <a th:href="@{/editsong/{id}(id=${song.songId})}">Edit</a>
-                </td>
-                <td sec:authorize="hasAuthority('ADMIN')">
-                    <a th:href="@{/deletesong/{id}(id=${song.songId})}">Delete</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div>
-        <form sec:authorize="isAuthenticated()" th:object="${newComment}" th:action="@{/savecomment}" method="post"
-            action="#">
-            <h2>Leave a comment</h2>
-            <input type="hidden" th:field="${newComment.band}" th:value="${newComment.band}" />
-            <textarea style="resize: none; " cols="60" rows="7" th:field="*{content}" required></textarea><br />
-            <input type="submit" value="Add comment" />
-            <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
-        </form>
+<header>
+    <div class="d-flex justify-content-between align-items-center px-1" sec:authorize="!isAuthenticated()">
+        <div>
+            <button onclick="location.href='/bandlist'">Back</button>
+        </div>
+        <div class="d-flex align-items-center">
+            <h2 class="mx-5"><span>Guest</span></h2>
+            <a class="btn btn-sm btn-primary mx-1" th:href="@{/login}">Login</a>
+            <a class="btn btn-sm btn-success" th:href="@{/signup}">Sign Up</a>
+        </div>
     </div>
-    <div>
-        <h2>Title here</h2>
-        <div th:each=" comment : ${comments}">
-            <b><span style="display: inline-block; width: 200px; font-size: 1.2em;"
-                    th:text="${comment.user.userName}"></span></b>
-            <span style="display: inline-block; width: 180px;" th:text="${comment.getFormattedTimestamp}"></span>
-            <span><a sec:authorize="hasAuthority('ADMIN')"
-                    th:href="@{/deletecomment/{id}(id=${comment.commentId})}">Delete</a></span>
-            <div>
-                <p th:text="'&emsp;' + ${comment.content}"></p>
+    <div class="d-flex justify-content-between align-items-center px-1" sec:authorize="isAuthenticated()">
+        <div>
+            <button class="btn btn-sm btn-secondary" onclick="location.href='/bandlist'">Back</button>
+        </div>
+        <div class="d-flex align-items-center">
+            <h2 class="mx-5"><span sec:authentication="name"></h2></span>
+            <form th:action="@{/logout}" method="post">
+                <input class="btn btn-sm btn-danger" type="submit" value="Logout" />
+            </form>
+        </div>
+    </div>
+</header>
+
+<body class="color">
+    <div class="container">
+        <table class="table table-sm table-borderless text-center w-25 mx-auto table-color">
+            <thead>
+                <tr class="fs-1">
+                    <th colspan="3" th:text="${band.bandName}"></th>
+                </tr>
+                <tr class="fs-5">
+                    <th>Formed</th>
+                    <th>Country</th>
+                    <th>Genre</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${band.yearFormed}"></td>
+                    <td th:text="${band.countryOfOrigin}"></td>
+                    <td th:text="${band.genre}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container mt-5 mx-5" style="max-width: 1800px !important;">
+        <div class="row">
+            <div class="col-md-7">
+                <div>
+                    <h2 class="fs-1">Songlist
+                        <a class="btn btn-sm btn-info" sec:authorize="hasAuthority('ADMIN') || hasAuthority('USER')"
+                            th:href="@{/addsong/{id}(id=${band.bandId})}">New
+                            Song</a>
+                        <a class="fs-5" sec:authorize="hasAuthority('ADMIN')"
+                            th:href="@{/editband/{id}(id=${band.bandId})}">Edit band</a>
+
+                        <a class="fs-5" sec:authorize="hasAuthority('ADMIN')"
+                            th:href="@{/deleteband/{id}(id=${band.bandId})}">Delete
+                            band</a>
+                    </h2>
+                </div>
+                <table class="table table-md table-bordered w-75">
+                    <thead>
+                        <tr class="fs-5 table-dark">
+                            <th>Song name</th>
+                            <th>Year</th>
+                            <th>Album</th>
+                            <th>Listen</th>
+                            <th sec:authorize="hasAuthority('ADMIN')"></th>
+                            <th sec:authorize="hasAuthority('ADMIN')"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-dark" th:each=" song : ${songs}">
+                            <td th:text="${song.songName}"></td>
+                            <td th:text="${song.publicationYear}"></td>
+                            <td th:text="${song.album}"></td>
+                            <td style="width: 80px; text-align: center;">
+                                <span th:if="${not #strings.isEmpty(song.spotifyLink)}">
+                                    <a style="padding-right: 5px;" th:href="${song.spotifyLink}">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
+                                            style="height: 25px; width: 25px;" /></a>
+                                </span>
+                                <span th:if="${not #strings.isEmpty(song.youtubeLink)}">
+                                    <a th:href="${song.youtubeLink}" target="_blank">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg"
+                                            style="height: 25px; width: 25px;" /></a>
+                                </span>
+                            </td>
+                            <td sec:authorize="hasAuthority('ADMIN')">
+                                <a th:href="@{/editsong/{id}(id=${song.songId})}">Edit</a>
+                            </td>
+                            <td sec:authorize="hasAuthority('ADMIN')">
+                                <a th:href="@{/deletesong/{id}(id=${song.songId})}">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-5">
+                <form class="mt-5" sec:authorize="isAuthenticated()" th:object="${newComment}"
+                    th:action="@{/savecomment}" method="post" action="#">
+                    <h2>Leave a comment</h2>
+                    <input type="hidden" th:field="${newComment.band}" th:value="${newComment.band}" />
+                    <textarea class="mb-1" style="resize: none; background-color: #dbd9d9; " cols="55" rows="6"
+                        th:field="*{content}" required></textarea><br />
+                    <input class="mb-5" type="submit" value="Add comment" />
+                    <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+                </form>
+
+
+                <div class="row commentbox" th:each=" comment : ${comments}">
+
+                    <div class="col-md-6"
+                        style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px; padding-left: 5px;"
+                        th:text="${comment.user.userName}">
+                    </div>
+                    <div class="col-md-6 text-end" style="padding-right: 7px;"
+                        th:text="${comment.getFormattedTimestamp}">
+                    </div>
+                    <div class="col-md-12">
+                        <p style="overflow-wrap: break-word; margin-bottom: 3px;" th:text="${comment.content}"></p>
+                    </div>
+                    <div class="col-md-12 text-end"><a sec:authorize="hasAuthority('ADMIN')"
+                            th:href="@{/deletecomment/{id}(id=${comment.commentId})}">Delete</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

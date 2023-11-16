@@ -69,7 +69,7 @@ public class BandController {
 
     // add new band
     @GetMapping("/addband")
-    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public String addNewBand(Model model) {
 
         model.addAttribute("band", new Band());
