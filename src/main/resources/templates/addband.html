@@ -19,27 +19,28 @@
         <div class="row justify-content-center">
             <form class="col-md-4" th:object="${band}" th:action="@{/saveband}" method="post">
                 <div class="mb-3">
-                    <label>*Name:</label>
+                    <label>Name*</label>
                     <input class="form-control" type="text" id="bandName" th:field="*{bandName}" required />
                     <span th:if="${#fields.hasErrors('bandName')}" th:errors="*{bandName}"></span>
                 </div>
                 <div class="mb-3">
-                    <label>*Formed:</label>
+                    <label>Formed*</label>
                     <input class="form-control" type="text" id="yearFormed" th:field="*{yearFormed}" required />
                     <span th:if="${#fields.hasErrors('yearFormed')}" th:errors="*{yearFormed}"></span>
                 </div>
                 <div class="mb-3">
-                    <label>*Country:</label>
+                    <label>Country*</label>
                     <input class="form-control" type="text" id="countryOfOrigin" th:field="*{countryOfOrigin}"
                         required />
                     <span th:if="${#fields.hasErrors('countryOfOrigin')}" th:errors="*{countryOfOrigin}"></span>
                 </div>
                 <div class="mb-3">
-                    <label>*Genre:</label>
+                    <label>Genre*</label>
                     <input class="form-control" type="text" id="genre" th:field="*{genre}" required />
                     <span th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></span>
                 </div>
                 <div class="mb-3">
+                    <p>* Required fields</p>
                     <input class="btn btn-sm btn-primary" type="submit" value="Add" />
                     <input class="btn btn-sm btn-secondary" type="button" value="Back"
                         onclick="location.href='/bandlist'" />

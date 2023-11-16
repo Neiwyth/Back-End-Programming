@@ -6,27 +6,33 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css.bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <style>
+        .color {
+            background-color: rgba(219, 198, 169, 100%);
+        }
+    </style>
 </head>
 
 
-<body>
-    <div>
-        <h1>Log In</h1>
-        <form th:action="@{/login}" method="post">
-            <div>
-                <input type="text" name="username" placeholder="Username" />
-            </div>
-            <div>
-                <input type="password" name="password" placeholder="Password" />
-            </div>
-            <div>
-                <p th:if="${param.error}">Invalid username or password</p>
-                <input type="submit" value="Log In" />
-                <a th:href="@{/signup}">Sign Up</a>
-            </div>
-        </form>
+<body class="color">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Log In</h1>
+        <div class="row justify-content-center">
+            <form class="col-md-3" th:action="@{/login}" method="post">
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="username" placeholder="Username" />
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="password" name="password" placeholder="Password" />
+                </div>
+                <div class="mb-3 text-center">
+                    <p th:if="${param.error}">Invalid username or password</p>
+                    <input class="btn btn-sm btn-success" type="submit" value="Log In" />
+                    <a class="btn btn-sm btn-info" th:href="@{/signup}">Sign Up</a>
+                </div>
+            </form>
+        </div>
     </div>
-
 </body>
 
 </html>

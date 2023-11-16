@@ -17,7 +17,7 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">Create new song entry</h1>
         <div class="row justify-content-center">
-            <form class="col-md-4" th:object="${newSong}" th:action="@{/savesong}" method="post">
+            <form class="col-md-5" th:object="${newSong}" th:action="@{/savesong}" method="post">
                 <div class="mb-3">
                     <input class="form-control" type="hidden" th:field="${newSong.band}" />
                 </div>
@@ -43,12 +43,14 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Spotify</label>
-                    <input class="form-control" type="text" id="spotifyLink" th:field="*{spotifyLink}" />
+                    <input class="form-control" type="text" id="spotifyLink" th:field="*{spotifyLink}"
+                        placeholder="Use spotify URI link (spotify:track:)" />
                     <span th:if="${#fields.hasErrors('spotifyLink')}" th:errors="*{spotifyLink}"></span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Youtube</label>
-                    <input class="form-control" type="text" id="youtubeLink" th:field="*{youtubeLink}" />
+                    <input class="form-control" type="text" id="youtubeLink" th:field="*{youtubeLink}"
+                        placeholder="Use full https address (https://www.youtube.com/watch?)" />
                     <span th:if="${#fields.hasErrors('youtubeLink')}" th:errors="*{youtubeLink}"></span>
                 </div>
                 <div class="mb-3">

@@ -6,36 +6,46 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css.bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <style>
+        .color {
+            background-color: rgba(219, 198, 169, 100%);
+        }
+    </style>
 </head>
 
 
-<body>
-    <div>
-        <h1>Sign up</h1>
-        <form th:object="${signupForm}" th:action="@{/saveuser}" method="post">
-            <div>
-                <label>Username:</label>
-                <input type="text" id="userName" th:field="${signupForm.username}" placeholder="Username" required />
-                <span th:if="${#fields.hasErrors('username')}" th:errors="${signupForm.username}"></span>
-            </div>
-            <div>
-                <label>Password:</label>
-                <input type="password" id="password" th:field="${signupForm.password}" placeholder="Password"
-                    required />
-                <span th:if="${#fields.hasErrors('password')}" th:errors="${signupForm.password}"></span>
-            </div>
-            <div>
-                <label>Confirm Password:</label>
-                <input type="password" id="confirmPassword" th:field="${signupForm.confirmPassword}"
-                    placeholder="Confirm Password" required />
-                <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="${signupForm.confirmPassword}"></span>
-            </div>
-            <div>
-                <input type="submit" value="Sign Up" />
-            </div>
-        </form>
+<body class="color">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Sign up</h1>
+        <div class="row justify-content-center">
+            <form class="col-md-3" th:object="${signupForm}" th:action="@{/saveuser}" method="post">
+                <div class="mb-3">
+                    <label>Username:</label>
+                    <input class="form-control" type="text" id="userName" th:field="${signupForm.username}"
+                        placeholder="Username" required />
+                    <span th:if="${#fields.hasErrors('username')}" th:errors="${signupForm.username}"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Password:</label>
+                    <input class="form-control" type="password" id="password" th:field="${signupForm.password}"
+                        placeholder="Password" required />
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="${signupForm.password}"></span>
+                </div>
+                <div class="mb-3">
+                    <label>Confirm Password:</label>
+                    <input class="form-control" type="password" id="confirmPassword"
+                        th:field="${signupForm.confirmPassword}" placeholder="Confirm Password" required />
+                    <span th:if="${#fields.hasErrors('confirmPassword')}"
+                        th:errors="${signupForm.confirmPassword}"></span>
+                </div>
+                <div class="mb-3 text-center">
+                    <input class="btn btn-sm btn-success" type="submit" value="Sign Up" />
+                    <input class="btn btn-sm btn-secondary" type="button" value="Back"
+                        onclick="location.href='/bandlist'" />
+                </div>
+            </form>
+        </div>
     </div>
-
 </body>
 
 </html>
