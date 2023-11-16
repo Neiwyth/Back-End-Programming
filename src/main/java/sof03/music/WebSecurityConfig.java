@@ -28,6 +28,7 @@ public class WebSecurityConfig {
                                                 .requestMatchers(antMatcher("/css/**")).permitAll()
                                                 .requestMatchers(antMatcher("/signup")).anonymous()
                                                 .requestMatchers(antMatcher("/saveuser")).anonymous()
+                                                .requestMatchers(antMatcher("/")).permitAll()
                                                 .requestMatchers(antMatcher("/bandlist")).permitAll()
                                                 .requestMatchers(antMatcher("/bandinfo/**")).permitAll()
                                                 .requestMatchers(toH2Console()).permitAll()

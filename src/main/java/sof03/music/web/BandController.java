@@ -44,7 +44,7 @@ public class BandController {
     }
 
     // list all bands
-    @GetMapping("/bandlist")
+    @GetMapping({ "/", "/bandlist" })
     public String showAllBands(Model model) {
 
         model.addAttribute("bands", bandRepository.findAll());
